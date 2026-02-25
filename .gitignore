@@ -1,0 +1,5 @@
+# Env files (no commitear secretos)
+**/.env
+
+# Docker volumes (por si los mapeas a carpetas locales)
+**/*mysql*data*/
