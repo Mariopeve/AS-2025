@@ -1,0 +1,9 @@
+zone "produccion.lab" {
+    type master;
+    file "/etc/bind/db.produccion";
+};
+
+zone "desarrollo.lab" {
+    type master;
+    file "/etc/bind/db.desarrollo";
+};

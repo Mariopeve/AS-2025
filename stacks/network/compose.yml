@@ -6,14 +6,27 @@ services:
     privileged: true # Necesario para manipular reglas de iptables/enrutamiento
     networks:
       vpn_net:
-        ipv4_address: 172.10.0.10
+        ipv4_address: 172.10.0.2
+      services_net:
+        ipv4_address: 172.20.0.2
+      production_net:
+        ipv4_address: 172.30.0.2
+      development_net:
+        ipv4_address: 172.40.0.2
+    command: tail -f /dev/null # Mantiene el contenedor encendido
+  dns_server:
+    image: ubuntu/bind9:latest
+    container_name: dns_server
+    environment:
+    - BIND9_USER=root
+    networks:
       services_net:
         ipv4_address: 172.20.0.10
-      production_net:
-        ipv4_address: 172.30.0.10
-      development_net:
-        ipv4_address: 172.40.0.10
-    command: tail -f /dev/null # Mantiene el contenedor encendido
+    volumes:
+      - ./named.conf.local:/etc/bind/named.conf.local
+      - ./db.produccion:/etc/bind/db.produccion
+      - ./db.desarrollo:/etc/bind/db.desarrollo
+    restart: always
 
 networks:
   vpn_net:
