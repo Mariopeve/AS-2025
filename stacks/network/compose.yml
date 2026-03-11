@@ -1,0 +1,26 @@
+
+services:
+  pfsense-fw:
+    image: ubuntu
+    container_name: pfsense-fw
+    privileged: true # Necesario para manipular reglas de iptables/enrutamiento
+    networks:
+      vpn_net:
+        ipv4_address: 172.10.0.10
+      services_net:
+        ipv4_address: 172.20.0.10
+      production_net:
+        ipv4_address: 172.30.0.10
+      development_net:
+        ipv4_address: 172.40.0.10
+    command: tail -f /dev/null # Mantiene el contenedor encendido
+
+networks:
+  vpn_net:
+    external: true
+  services_net:
+    external: true
+  production_net:
+    external: true
+  development_net:
+    external: true

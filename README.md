@@ -16,6 +16,23 @@ chmod +x scripts/setup-docker-ubuntu.sh
 ./scripts/setup-docker-ubuntu.sh
 ```
 
+## Crear redes Docker + (opcional) arrancar pfSense
+
+Si tu Ubuntu Server es el host donde corre Docker y además ejecuta pfSense como VM (KVM/libvirt), puedes usar:
+
+```bash
+chmod +x scripts/provision-docker-networks-and-pfsense.sh
+sudo ./scripts/provision-docker-networks-and-pfsense.sh
+```
+
+Variables útiles:
+- `PFSENSE_MODE=libvirt|none` (por defecto `libvirt`)
+- `PFSENSE_DOMAIN=pfsense` (nombre del dominio en `virsh`)
+
+Notas:
+- Compose crea redes automáticamente salvo que uses `external: true`.
+- Si pfSense está en otro hypervisor (Proxmox/ESXi/VirtualBox) o es hardware, no se “inicia” desde Ubuntu: en ese caso usa su herramienta (`qm start`, API, etc.) y deja `PFSENSE_MODE=none`.
+
 3) Abre una nueva sesión (o cierra y reabre SSH) para aplicar el grupo `docker`.
 
 4) Levanta un stack (cuando tengas el `compose.yml` definido):

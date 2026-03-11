@@ -3,6 +3,7 @@ services:
     image: mysql:8.0
     container_name: dev_mysql
     restart: unless-stopped
+    mac_address: "02:42:ac:28:00:02"
     env_file:
       - .env
     environment:
@@ -11,7 +12,7 @@ services:
       MYSQL_USER: ${MYSQL_USER:-as2025}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
-      - "3306:3306"
+      - "3308:3306"
     volumes:
       - mysql_data:/var/lib/mysql
     networks:
@@ -28,4 +29,5 @@ volumes:
 
 networks:
   development_net:
-    driver: bridge
+    external: true
+        
