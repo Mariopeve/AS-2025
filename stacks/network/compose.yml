@@ -16,21 +16,7 @@ services:
     volumes:
       - ./init.sh:/init.sh
       - ./iptables.rules:/iptables.rules
-
     command: bash /init.sh
-  dns_server:
-    image: ubuntu/bind9:latest
-    container_name: dns_server
-    environment:
-    - BIND9_USER=root
-    networks:
-      services_net:
-        ipv4_address: 172.20.0.10
-    volumes:
-      - ./named.conf.local:/etc/bind/named.conf.local
-      - ./db.prod:/etc/bind/db.prod
-      - ./db.dev:/etc/bind/db.dev
-    restart: always
 
 networks:
   vpn_net:
