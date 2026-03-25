@@ -1,0 +1,30 @@
+*filter
+
+:INPUT DROP [0:0]
+:FORWARD DROP [0:0]
+:OUTPUT ACCEPT [0:0]
+
+# permitir tráfico ya establecido
+-A FORWARD -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+# permitir redes internas
+-A FORWARD -s 172.10.0.0/16 -j ACCEPT
+-A FORWARD -s 172.20.0.0/16 -j ACCEPT
+-A FORWARD -s 172.30.0.0/16 -j ACCEPT
+-A FORWARD -s 172.40.0.0/16 -j ACCEPT
+
+# bloquear producción -> desarrollo
+-A FORWARD -s 172.30.0.0/16 -d 172.40.0.0/16 -j DROP
+
+COMMIT
+
+*nat
+
+:PREROUTING ACCEPT [0:0]
+:POSTROUTING ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+
+# NAT (ajusta interfaz)
+-A POSTROUTING -o eth0 -j MASQUERADE
+
+COMMIT
