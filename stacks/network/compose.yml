@@ -29,8 +29,8 @@ services:
         ipv4_address: 172.20.0.10
     volumes:
       - ./named.conf.local:/etc/bind/named.conf.local
-      - ./db.produccion:/etc/bind/db.produccion
-      - ./db.desarrollo:/etc/bind/db.desarrollo
+      - ./db.prod:/etc/bind/db.prod
+      - ./db.dev:/etc/bind/db.dev
     restart: always
 
 networks:
